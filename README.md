@@ -1,1 +1,1 @@
-# xmlfeeder
+# SimpleFeeder
