@@ -1,0 +1,18 @@
+{
+  "name": "christianezeani/simplefeeder",
+  "description": "",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "^2.9",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "SimpleFeeder\\": "src"
+    }
+  }
+}
