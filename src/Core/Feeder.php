@@ -9,6 +9,8 @@ class Feeder {
 
   use CanReadFeed, CanWriteFeed, CanCallStaticMethods;
 
+  protected $entryType = '';
+
   public function add(Entry $entry) {
     // 
   }
