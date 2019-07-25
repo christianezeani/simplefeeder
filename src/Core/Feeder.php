@@ -11,6 +11,10 @@ class Feeder {
 
   protected $entryType = '';
 
+  function __construct() {
+    // 
+  }
+
   public function add(Entry $entry) {
     // 
   }
