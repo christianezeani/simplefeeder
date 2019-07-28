@@ -2,6 +2,7 @@
 namespace SimpleFeeder\Core;
 
 use SimpleFeeder\Exceptions\InvalidEntryException;
+use SimpleFeeder\Traits\HasEntryType;
 use SimpleFeeder\Exceptions\InvalidCollectionItemException;
 
 /**
@@ -9,9 +10,10 @@ use SimpleFeeder\Exceptions\InvalidCollectionItemException;
  */
 class Collection implements ArrayAccess, JsonSerializable {
 
-  private $_type;
+  use HasEntryType;
 
-  private $_items = [];
+  private $entryType = '';
+  private $items = [];
 
   /**
    * Collection Constructor
@@ -27,26 +29,14 @@ class Collection implements ArrayAccess, JsonSerializable {
       throw new InvalidEntryException($message);
     }
 
-    $this->_type = $type;
+    $this->entryType = $type;
 
     $this->concat($data);
   }
 
-  /**
-   * @ignore Validates an input
-   */
-  private function validate($data) {
-    if (empty($this->_type)) return;
-
-    if (!is_object($data) || !is_a($data, $this->_type)) {
-      $message = 'Expected an instance of "'.$this->_type.'", "'.get_class($data).'" given.';
-      throw new InvalidCollectionItemException($message);
-    }
-  }
-
   public function add($entry) {
-    $this->validate($entry);
-    $this->_items[] = $entry;
+    $this->validateEntry($entry);
+    $this->items[] = $entry;
     return $this;
   }
 
@@ -60,7 +50,7 @@ class Collection implements ArrayAccess, JsonSerializable {
   }
 
   public function count() {
-    return count($this->_items);
+    return count($this->items);
   }
   
   public function length() {
@@ -73,17 +63,17 @@ class Collection implements ArrayAccess, JsonSerializable {
   }
 
   public function &item($index) {
-    if (!is_int($index) || !array_key_exists($index, $this->_items)) {
+    if (!is_int($index) || !array_key_exists($index, $this->items)) {
       return $item = NULL;
     }
-    return $this->_items[$index];
+    return $this->items[$index];
   }
 
   public function each($callable) {
     if (!is_callable($callable)) {
-      foreach ($this->_items as $index => &$item) {
+      foreach ($this->items as $index => &$item) {
         call_user_func_array($callable, [&$item, $index]);
-        $this->validate($item);
+        $this->validateEntry($item);
       }
     }
     return $this;
@@ -94,7 +84,7 @@ class Collection implements ArrayAccess, JsonSerializable {
     if (!is_int($length)) $length = $this->count();
     if (!is_bool($preserve_keys)) $preserve_keys = false;
 
-    $result = array_slice($this->_items, $offset, $length, $preserve_keys);
+    $result = array_slice($this->items, $offset, $length, $preserve_keys);
     return new self($result, $this->_type);
   }
 
@@ -102,12 +92,12 @@ class Collection implements ArrayAccess, JsonSerializable {
     if (!is_int($length) || $length <= 0) $length = $this->count();
     if (!is_array($replacement)) $replacement = array();
 
-    $result = array_splice($this->_items, $offset, $length, $replacement);
+    $result = array_splice($this->items, $offset, $length, $replacement);
     return new self($result, $this->_type);
   }
 
   public function clear() {
-    $this->_items = [];
+    $this->items = [];
     return $this;
   }
 
