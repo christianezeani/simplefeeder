@@ -16,5 +16,9 @@
     "psr-4": {
       "SimpleFeeder\\": "src"
     }
+  },
+  "scripts": {
+    "test": "phpunit --testdox",
+    "docs": "phpdoc -d \"./src\" -t \"./docs/api\" --template=\"checkstyle\""
   }
 }

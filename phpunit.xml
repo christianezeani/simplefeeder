@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+  <testsuites>
+    <testsuite name="SimpleFeeder">
+      <file>./tests/units/SimpleFeeder.php</file>
+    </testsuite>
+    
+    <testsuite name="Entries">
+      <directory>./tests/units/Entries</directory>
+    </testsuite>
+    
+    <testsuite name="Feeders">
+      <directory>./tests/units/Feeders</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

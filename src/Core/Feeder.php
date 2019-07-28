@@ -1,26 +1,23 @@
 <?php
 namespace SimpleFeeder\Core;
 
-use SimpleFeeder\Traits\CanReadFeed;
-use SimpleFeeder\Traits\CanWriteFeed;
-use SimpleFeeder\Traits\CanCallStaticMethods;
+use SimpleFeeder\Traits\CanReadAndWriteFeed;
 
-class Feeder {
+abstract class Feeder {
 
-  use CanReadFeed, CanWriteFeed, CanCallStaticMethods;
+  use CanReadAndWriteFeed;
 
-  protected $entryType = '';
-
-  function __construct() {
-    // 
+  function __construct($data = array()) {
+    $this->initializeDynamicFields();
+    $this->createCollection($data, $this->entryType);
+    $this->initialize();
   }
 
-  public function add(Entry $entry) {
-    // 
-  }
+  abstract protected function initialize();
 
-  public function remove(Entry $entry) {
-    // 
+  public function clear() {
+    $this->collection->clear();
+    return $this;
   }
 
 }
