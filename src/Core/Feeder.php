@@ -1,14 +1,15 @@
 <?php
 namespace SimpleFeeder\Core;
 
+use SimpleFeeder\Traits\UsesCustomValues;
 use SimpleFeeder\Traits\CanReadAndWriteFeed;
 
 abstract class Feeder {
 
+  use UsesCustomValues;
   use CanReadAndWriteFeed;
 
   function __construct($data = array()) {
-    $this->initializeDynamicFields();
     $this->createCollection($data, $this->entryType);
     $this->initialize();
   }

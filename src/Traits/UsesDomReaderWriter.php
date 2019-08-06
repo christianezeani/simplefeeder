@@ -28,7 +28,7 @@ trait UsesDomReaderWriter {
     throw new NotImplementedException($message);
   }
 
-  private function initialize() {
+  protected function initialize() {
     $this->dom = new DOMDocument();
     $this->dom->version = '1.0';
     $this->dom->encoding = 'UTF-8';

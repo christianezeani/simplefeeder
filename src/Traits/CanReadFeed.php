@@ -5,7 +5,6 @@ use SimpleFeeder\Exceptions\NotImplementedException;
 
 trait CanReadFeed {
 
-  use HasDynamicFields;
   use HasEntryCollection;
 
   public function read(string $input) {
