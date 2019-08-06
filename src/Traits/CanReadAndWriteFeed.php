@@ -10,7 +10,9 @@ trait CanReadAndWriteFeed {
    *
    * @return string
    */
-  abstract public function toString();
+  public function toString() {
+    return '';
+  }
 
   protected function onBeforeRender() {
     // Not yet implemented

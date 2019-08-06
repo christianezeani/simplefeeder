@@ -13,6 +13,16 @@ trait HasDynamicFields {
     $this->data = new stdClass;
   }
 
+  public function getFieldAttribute($name) {
+    return $this->data->{$name};
+  }
+
+  public function setFieldAttribute($name, $value) {
+    if (array_key_exists($name, $this->fields)) {
+      $this->data->{$name} = $value;
+    }
+  }
+
   public function __isset($name) {
     return isset($this->data->{$name});
   }
@@ -22,13 +32,11 @@ trait HasDynamicFields {
   }
 
   public function __set($name, $value) {
-    if (array_key_exists($name, $this->fields)) {
-      $this->data->{$name} = $value;
-    }
+    $this->setFieldAttribute($name, $value);
   }
 
   public function __get($name) {
-    return $this->data->{$name};
+    return $this->getFieldAttribute($name);
   }
 
 }

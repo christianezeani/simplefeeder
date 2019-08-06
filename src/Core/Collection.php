@@ -5,12 +5,12 @@ use SimpleFeeder\Exceptions\InvalidEntryException;
 use SimpleFeeder\Traits\HasEntryType;
 use SimpleFeeder\Exceptions\InvalidCollectionItemException;
 
+// use ArrayAccess, JsonSerializable;
+
 /**
  * Holds a collection of data
  */
-class Collection implements ArrayAccess, JsonSerializable {
-
-  use HasEntryType;
+class Collection {
 
   private $entryType = '';
   private $items = [];
@@ -23,7 +23,8 @@ class Collection implements ArrayAccess, JsonSerializable {
    * @param array $data Array of data
    * @param string $type Data type for use in validating $data
    */
-  function __construct(array $data = array(), string $type = '') {
+  function __construct($data = array(), string $type = '') {
+    if (!is_array($data)) $data = array();
     if (!empty($type) && !is_subclass_of($type, Entry::class, true)) {
       $message = "Expected a subclass of '".Entry::class."', '".$type."' provided!";
       throw new InvalidEntryException($message);

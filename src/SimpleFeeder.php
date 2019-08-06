@@ -45,4 +45,17 @@ class SimpleFeeder {
     return $this->feeder->{$method}(...$parameters);
   }
 
+  public function __get($name) {
+    return $this->feeder->{$name};
+  }
+
+  public function __set($name, $value) {
+    $this->feeder->{$name} = $value;
+  }
+
+  public function __invoke(...$args) {
+    $feeder = &$this->feeder;
+    return $feeder(...$args);
+  }
+  
 }
