@@ -21,57 +21,21 @@ class AtomFeeder extends Feeder {
   /**
    * @var DOMElement
    */
-  private $id;
-
+  private $id,
+    $title,
+    $author,
+    $authorName,
+    $authorUri,
+    $authorEmail,
+    $updated,
+    $published,
+    $rights,
+    $generator;
+  
   /**
-   * @var DOMElement
-   */
-  private $title;
-
-  /**
-   * @var DOMElement
+   * @var DOMElement[]
    */
   private $link;
-
-  /**
-   * @var DOMElement
-   */
-  private $author;
-
-  /**
-   * @var DOMElement
-   */
-  private $authorName;
-
-  /**
-   * @var DOMElement
-   */
-  private $authorUri;
-
-  /**
-   * @var DOMElement
-   */
-  private $authorEmail;
-
-  /**
-   * @var DOMElement
-   */
-  private $updated;
-
-  /**
-   * @var DOMElement
-   */
-  private $published;
-
-  /**
-   * @var DOMElement
-   */
-  private $rights;
-
-  /**
-   * @var DOMElement
-   */
-  private $generator;
 
   protected function onDomReady() {
     $this->root = $this->dom->createElement('feed');
@@ -98,12 +62,11 @@ class AtomFeeder extends Feeder {
   }
 
   public function getLinkValue() {
-    if (!$this->link) return NULL;
-    return $this->link->getAttribute('href');
+    return $this->getValueAttributeArray($this->link, 'href');
   }
 
   public function setLinkValue($value, $attributes) {
-    $this->setValueToRoot($this->link, 'link', $value, $attributes);
+    $this->addValueAttributeToRoot($this->link, 'link', 'href', $value, $attributes);
   }
 
   public function getUpdatedValue() {

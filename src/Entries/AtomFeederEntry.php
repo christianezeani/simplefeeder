@@ -128,23 +128,3 @@ class AtomFeederEntry extends Entry {
 
 }
 
-/*
-<entry>
-  <author>
-    <name>Mark Pilgrim</name>
-    <uri>http://example.org/</uri>
-    <email>f8dy@example.com</email>
-  </author>
-  <contributor>
-    <name>Sam Ruby</name>
-  </contributor>
-  <contributor>
-    <name>Joe Gregorio</name>
-  </contributor>
-  <content type="xhtml" xml:lang="en" xml:base="http://diveintomark.org/">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p><i>[Update: The Atom draft is finished.]</i></p>
-    </div>
-  </content>
-</entry>
-*/
