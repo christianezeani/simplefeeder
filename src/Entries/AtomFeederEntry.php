@@ -22,7 +22,7 @@ class AtomFeederEntry extends Entry {
   /**
    * @var DOMElement
    */
-  private $id, $title, $updated, $published, $author, $authorName, $authorUri, $authorEmail;
+  private $id, $title, $updated, $published, $author, $authorName, $authorUri, $authorEmail, $content;
 
   /**
    * @var DOMElement[]
@@ -116,6 +116,14 @@ class AtomFeederEntry extends Entry {
     $contributor =  $name = NULL;
     $contributor = $this->addValueToRoot($this->contributor, 'contributor', '');
     $this->setValue($contributor, $name, 'name', $value, $attributes);
+  }
+  
+  public function getContentValue() {
+    return $this->getValue($this->content);
+  }
+
+  public function setContentValue($value, $attributes) {
+    $this->setValueToRoot($this->content, 'content', $value, $attributes);
   }
 
 }
