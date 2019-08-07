@@ -212,7 +212,7 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function addValueAttribute(DOMElement &$root, &$array, $tagName, $attrName, $value, $attributes = array()) {
+  private function &addValueAttribute(DOMElement &$root, &$array, $tagName, $attrName, $value, $attributes = array()) {
     if (is_null($array)) $array = array();
 
     for ($i = 0; $i < count($array); $i++) {
@@ -223,12 +223,14 @@ trait UsesDomFunctions {
       }
     }
 
-    $link = $this->dom->createElement($tagName);
-    $this->setExtraAttributes($link, $attributes);
-    $link->setAttribute($attrName, $value);
+    $element = $this->dom->createElement($tagName);
+    $this->setExtraAttributes($element, $attributes);
+    $element->setAttribute($attrName, $value);
 
-    $root->appendChild($link);
-    $array[] = &$link;
+    $root->appendChild($element);
+    $array[] = &$element;
+
+    return $element;
   }
 
   /**
@@ -241,8 +243,8 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function addValueAttributeToRoot(&$array, $tagName, $attrName, $value, $attributes = array()) {
-    $this->addValueAttribute($this->root, $array, $tagName, $attrName, $value, $attributes);
+  private function &addValueAttributeToRoot(&$array, $tagName, $attrName, $value, $attributes = array()) {
+    return $this->addValueAttribute($this->root, $array, $tagName, $attrName, $value, $attributes);
   }
 
   private function ensureParentElement(DOMElement &$element = NULL, $tagName, $attributes = array()) {
