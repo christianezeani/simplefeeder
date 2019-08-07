@@ -7,4 +7,8 @@ class Entry {
 
   use UsesCustomValues;
 
+  function __destruct() {
+    // 
+  }
+
 }

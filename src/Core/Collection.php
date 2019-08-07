@@ -12,7 +12,9 @@ use SimpleFeeder\Exceptions\InvalidCollectionItemException;
  */
 class Collection {
 
-  private $entryType = '';
+  use HasEntryType;
+
+  // private $entryType = '';
   private $items = [];
 
   /**
@@ -86,7 +88,12 @@ class Collection {
     if (!is_bool($preserve_keys)) $preserve_keys = false;
 
     $result = array_slice($this->items, $offset, $length, $preserve_keys);
-    return new self($result, $this->_type);
+
+    foreach ($result as $entry) {
+      $entry->__destruct();
+    }
+
+    return new self($result, $this->entryType);
   }
 
   public function splice($offset, $length = NULL, $replacement = array()) {
@@ -94,10 +101,14 @@ class Collection {
     if (!is_array($replacement)) $replacement = array();
 
     $result = array_splice($this->items, $offset, $length, $replacement);
-    return new self($result, $this->_type);
+    return new self($result, $this->entryType);
   }
 
   public function clear() {
+    foreach ($this->items as $entry) {
+      $entry->__destruct();
+    }
+
     $this->items = [];
     return $this;
   }

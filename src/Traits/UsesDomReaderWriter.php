@@ -6,14 +6,7 @@ use SimpleFeeder\Exceptions\NotImplementedException;
 
 trait UsesDomReaderWriter {
 
-  /**
-   * Undocumented variable
-   *
-   * @var DOMDocument
-   * 
-   * @ignore
-   */
-  private $dom;
+  use UsesDomFunctions;
 
   /**
    * Called after DOM has been initialized.
