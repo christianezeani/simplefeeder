@@ -4,6 +4,7 @@ namespace SimpleFeeder\Feeders;
 use SimpleFeeder\Core\Feeder;
 use SimpleFeeder\Entries\AtomFeederEntry;
 use SimpleFeeder\Traits\UsesDomReaderWriter;
+use SimpleFeeder\Traits\UsesDomFunctions;
 use DOMElement;
 
 class AtomFeeder extends Feeder {
@@ -84,10 +85,7 @@ class AtomFeeder extends Feeder {
   }
 
   public function setIdValue($value, $attributes) {
-    if ($this->id) $this->root->removeChild($this->id);
-    $this->id = $this->dom->createElement('id', $value);
-    $this->setExtraAttributes($this->id, $attributes);
-    $this->root->appendChild($this->id);
+    $this->setValueToRoot($this->id, 'id', $value, $attributes);
   }
 
   public function getTitleValue() {
@@ -96,10 +94,7 @@ class AtomFeeder extends Feeder {
   }
 
   public function setTitleValue($value, $attributes) {
-    if ($this->title) $this->root->removeChild($this->title);
-    $this->title = $this->dom->createElement('title', $value);
-    $this->setExtraAttributes($this->title, $attributes);
-    $this->root->appendChild($this->title);
+    $this->setValueToRoot($this->title, 'title', $value, $attributes);
   }
 
   public function getLinkValue() {
@@ -108,15 +103,7 @@ class AtomFeeder extends Feeder {
   }
 
   public function setLinkValue($value, $attributes) {
-    if (!$this->link) {
-      $this->link = $this->dom->createElement('link');
-      $this->root->appendChild($this->link);
-    }
-
-    $this->setExtraAttributes($this->link, $attributes, 'href');
-
-    $this->link->removeAttribute('href');
-    $this->link->setAttribute('href', $value);
+    $this->setValueToRoot($this->link, 'link', $value, $attributes);
   }
 
   public function getUpdatedValue() {
@@ -125,10 +112,7 @@ class AtomFeeder extends Feeder {
   }
 
   public function setUpdatedValue($value, $attributes) {
-    if ($this->updated) $this->root->removeChild($this->updated);
-    $this->updated = $this->dom->createElement('updated', $value);
-    $this->setExtraAttributes($this->updated, $attributes);
-    $this->root->appendChild($this->updated);
+    $this->setValueToRoot($this->updated, 'updated', $value, $attributes);
   }
 
   public function getAuthorNameValue() {
@@ -137,11 +121,8 @@ class AtomFeeder extends Feeder {
   }
 
   public function setAuthorNameValue($value, $attributes) {
-    $this->ensureAuthorParentElement();
-    if ($this->authorName) $this->author->removeChild($this->authorName);
-    $this->authorName = $this->dom->createElement('name', $value);
-    $this->setExtraAttributes($this->authorName, $attributes);
-    $this->author->appendChild($this->authorName);
+    $this->ensureParentElement($this->author, 'author');
+    $this->setValue($this->author, $this->authorName, 'name', $value, $attributes);
   }
 
   public function getAuthorUriValue() {
@@ -150,11 +131,8 @@ class AtomFeeder extends Feeder {
   }
 
   public function setAuthorUriValue($value, $attributes) {
-    $this->ensureAuthorParentElement();
-    if ($this->authorUri) $this->author->removeChild($this->authorUri);
-    $this->authorUri = $this->dom->createElement('uri', $value);
-    $this->setExtraAttributes($this->authorUri, $attributes);
-    $this->author->appendChild($this->authorUri);
+    $this->ensureParentElement($this->author, 'author');
+    $this->setValue($this->author, $this->authorUri, 'uri', $value, $attributes);
   }
 
   public function getAuthorEmailValue() {
@@ -163,11 +141,8 @@ class AtomFeeder extends Feeder {
   }
 
   public function setAuthorEmailValue($value, $attributes) {
-    $this->ensureAuthorParentElement();
-    if ($this->authorEmail) $this->author->removeChild($this->authorEmail);
-    $this->authorEmail = $this->dom->createElement('email', $value);
-    $this->setExtraAttributes($this->authorEmail, $attributes);
-    $this->author->appendChild($this->authorEmail);
+    $this->ensureParentElement($this->author, 'author');
+    $this->setValue($this->author, $this->authorEmail, 'email', $value, $attributes);
   }
 
   public function getRightsValue() {
@@ -176,10 +151,7 @@ class AtomFeeder extends Feeder {
   }
 
   public function setRightsValue($value, $attributes) {
-    if ($this->rights) $this->root->removeChild($this->rights);
-    $this->rights = $this->dom->createElement('rights', $value);
-    $this->setExtraAttributes($this->rights, $attributes);
-    $this->root->appendChild($this->rights);
+    $this->setValueToRoot($this->rights, 'rights', $value, $attributes);
   }
 
   public function getGeneratorValue() {
@@ -188,33 +160,17 @@ class AtomFeeder extends Feeder {
   }
 
   public function setGeneratorValue($value, $attributes) {
-    if ($this->generator) $this->root->removeChild($this->generator);
-    $this->generator = $this->dom->createElement('generator', $value);
-    $this->setExtraAttributes($this->generator, $attributes);
-    $this->root->appendChild($this->generator);
-  }
-
-  private function ensureAuthorParentElement() {
-    if (!$this->author) {
-      $this->author = $this->dom->createElement('author');
-      $this->root->appendChild($this->author);
-    }
-  }
-
-  private function setExtraAttributes(DOMElement &$element, $attributes, $exclude = '') {
-    if (!is_array($attributes)) $attributes = array();
-
-    foreach ($attributes as $name => $value) {
-      if ($exclude && $exclude === $name) continue;
-      $element->removeAttribute($name);
-      $element->setAttribute($name, $value);
-    }
+    $this->setValueToRoot($this->generator, 'generator', $value, $attributes);
   }
 
   protected function onBeforeRender() {
     if (!headers_sent()) {
       header('Content-Type: text/xml');
     }
+  }
+
+  protected function newEntryParameters() {
+    return array(&$this->dom);
   }
   
 }

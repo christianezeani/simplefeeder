@@ -16,10 +16,14 @@ trait HasEntryType {
     }
   }
 
-  protected function createNewEntry($data = array(), $default = NULL) {
-    if (empty($this->entryType)) return $default;
-    if (!class_exists($this->entryType)) return $default;
-    return new $this->entryType($data);
+  protected function createNewEntry(...$args) {
+    if (empty($this->entryType)) return NULL;
+    if (!class_exists($this->entryType)) return NULL;
+    return new $this->entryType(...$args);
+  }
+
+  protected function newEntryParameters() {
+    return array();
   }
 
 }

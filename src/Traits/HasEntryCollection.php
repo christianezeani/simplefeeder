@@ -49,7 +49,10 @@ trait HasEntryCollection {
       throw new InvalidCallbackException($message);
     }
 
-    $entry = $this->createNewEntry();
+    $params = $this->newEntryParameters();
+    if (!is_array($params)) $params = array();
+
+    $entry = $this->createNewEntry(...$params);
     call_user_func_array($callable, [&$entry]);
     $this->collection->add($entry);
     
