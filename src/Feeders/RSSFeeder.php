@@ -17,7 +17,7 @@ class RSSFeeder extends Feeder {
   /**
    * @var DOMElement
    */
-  private $root, $channel;
+  private $channel;
 
   private $title,
     $description,
