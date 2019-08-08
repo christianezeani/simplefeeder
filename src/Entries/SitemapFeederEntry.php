@@ -10,12 +10,12 @@ class SitemapFeederEntry extends Entry {
   use UsesDomFunctions;
 
   /**
-   * @var DOMDocument
+   * @var DOMElement
    */
   private $parent;
 
   /**
-   * @var DOMDocument
+   * @var DOMElement
    */
   private $loc,
     $lastmod,
@@ -68,11 +68,3 @@ class SitemapFeederEntry extends Entry {
 
 }
 
-/*
-<url>
-  <loc>http://www.example.com/</loc>
-  <lastmod>2005-01-01</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-*/
