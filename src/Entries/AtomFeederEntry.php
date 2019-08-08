@@ -54,7 +54,7 @@ class AtomFeederEntry extends Entry {
   }
 
   public function setTitleValue($value, $attributes) {
-    $this->setValueToRoot($this->title, 'title', $value, $attributes);
+    $this->setValueToRoot($this->title, 'title', $value, $attributes, true);
   }
 
   public function getLinkValue() {
@@ -87,7 +87,7 @@ class AtomFeederEntry extends Entry {
 
   public function setAuthorNameValue($value, $attributes) {
     $this->ensureParentElement($this->author, 'author');
-    $this->setValue($this->author, $this->authorName, 'name', $value, $attributes);
+    $this->setValue($this->author, $this->authorName, 'name', $value, $attributes, true);
   }
   
   public function getAuthorUriValue() {

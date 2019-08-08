@@ -105,9 +105,18 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function setValue(DOMElement &$root, DOMElement &$element = NULL, $tagName, $value, $attributes = array()) {
+  private function setValue(DOMElement &$root, DOMElement &$element = NULL, $tagName, $value, $attributes = array(), $cdata = false) {
+    if (!is_bool($cdata)) $cdata = false;
     if ($element) $root->removeChild($element);
-    $element = $this->dom->createElement($tagName, $value);
+    
+    if ($cdata) {
+      $content = $this->dom->createCDATASection($value);
+      $element = $this->dom->createElement($tagName);
+      $element->appendChild($content);
+    } else {
+      $element = $this->dom->createElement($tagName, $value);
+    }
+
     $this->setExtraAttributes($element, $attributes);
     $root->appendChild($element);
   }
@@ -121,8 +130,8 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function setValueToRoot(DOMElement &$element = NULL, $tagName, $value, $attributes = array()) {
-    $this->setValue($this->root, $element, $tagName, $value, $attributes);
+  private function setValueToRoot(DOMElement &$element = NULL, $tagName, $value, $attributes = array(), $cdata = false) {
+    $this->setValue($this->root, $element, $tagName, $value, $attributes, $cdata);
   }
 
   /**
@@ -168,7 +177,8 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function &addValue(DOMElement &$root, &$array, $tagName, $value, $attributes = array()) {
+  private function &addValue(DOMElement &$root, &$array, $tagName, $value, $attributes = array(), $cdata = false) {
+    if (!is_bool($cdata)) $cdata = false;
     if (is_null($array)) $array = array();
 
     for ($i = 0; $i < count($array); $i++) {
@@ -179,7 +189,14 @@ trait UsesDomFunctions {
       }
     }
 
-    $element = $this->dom->createElement($tagName, $value);
+    if ($cdata) {
+      $content = $this->dom->createCDATASection($value);
+      $element = $this->dom->createElement($tagName);
+      $element->appendChild($content);
+    } else {
+      $element = $this->dom->createElement($tagName, $value);
+    }
+
     $this->setExtraAttributes($element, $attributes);
 
     $root->appendChild($element);
@@ -197,8 +214,8 @@ trait UsesDomFunctions {
    * @param array $attributes
    * @return void
    */
-  private function &addValueToRoot(&$array, $tagName, $value, $attributes = array()) {
-    return $this->addValue($this->root, $array, $tagName, $value, $attributes);
+  private function &addValueToRoot(&$array, $tagName, $value, $attributes = array(), $cdata = false) {
+    return $this->addValue($this->root, $array, $tagName, $value, $attributes, $cdata);
   }
 
   /**
