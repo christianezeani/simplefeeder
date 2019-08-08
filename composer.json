@@ -9,7 +9,6 @@
     "php": ">=5.5.0"
   },
   "require-dev": {
-    "phpdocumentor/phpdocumentor": "^2.9",
     "phpunit/phpunit": "^7.5"
   },
   "autoload": {
@@ -18,7 +17,6 @@
     }
   },
   "scripts": {
-    "test": "phpunit --testdox",
-    "docs": "phpdoc -d \"./src\" -t \"./docs/api\" --template=\"checkstyle\""
+    "test": "phpunit --testdox"
   }
 }
