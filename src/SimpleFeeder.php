@@ -1,11 +1,10 @@
 <?php
 namespace SimpleFeeder;
 
-use SimpleFeeder\Exceptions\InvalidFeederException;
+use SimpleFeeder\Exceptions\InvalidFeederTypeException;
 
 use SimpleFeeder\Feeders\RSSFeeder;
 use SimpleFeeder\Feeders\AtomFeeder;
-use SimpleFeeder\Feeders\JSONFeeder;
 use SimpleFeeder\Feeders\SitemapFeeder;
 use SimpleFeeder\Feeders\SitemapIndexFeeder;
 
@@ -14,7 +13,6 @@ class SimpleFeeder {
   private static $types = [
     'rss' => RSSFeeder::class,
     'atom' => AtomFeeder::class,
-    'json' => JSONFeeder::class,
     'sitemap' => SitemapFeeder::class,
     'sitemapIndex' => SitemapIndexFeeder::class
   ];
