@@ -8,3 +8,4 @@
 [![Monthly Downloads](https://poser.pugx.org/christianezeani/simplefeeder/d/monthly)](https://packagist.org/packages/christianezeani/simplefeeder)
 [![Daily Downloads](https://poser.pugx.org/christianezeani/simplefeeder/d/daily)](https://packagist.org/packages/christianezeani/simplefeeder)
 
+SimpleFeeder is a PHP library to read and write RSS Feed, Atom Feed, Sitemap and Sitemap Index.
