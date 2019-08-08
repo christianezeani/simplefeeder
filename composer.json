@@ -1,7 +1,7 @@
 {
   "name": "christianezeani/simplefeeder",
   "description": "SimpleFeeder is a PHP library to read and write RSS Feed, Atom Feed, Sitemap and Sitemap Index.",
-  "keywords": ["simplefeeder", "rss-feed", "atom-feed", "json-feed", "sitemap", "sitemap-index"],
+  "keywords": ["simplefeeder", "rss-feed", "atom-feed", "sitemap", "sitemap-index"],
   "homepage": "https://github.com/christianezeani/simplefeeder",
   "type": "library",
   "license": "MIT",
