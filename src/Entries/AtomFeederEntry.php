@@ -22,7 +22,17 @@ class AtomFeederEntry extends Entry {
   /**
    * @var DOMElement
    */
-  private $id, $title, $updated, $published, $author, $authorName, $authorUri, $authorEmail, $content;
+  private $id,
+    $title,
+    $icon,
+    $logo,
+    $updated,
+    $published,
+    $author,
+    $authorName,
+    $authorUri,
+    $authorEmail,
+    $content;
 
   /**
    * @var DOMElement[]
@@ -63,6 +73,22 @@ class AtomFeederEntry extends Entry {
 
   public function setLinkValue($value, $attributes) {
     $this->addValueAttributeToRoot($this->link, 'link', 'href', $value, $attributes);
+  }
+
+  public function getIconValue() {
+    return $this->getValue($this->icon);
+  }
+
+  public function setIconValue($value, $attributes) {
+    $this->setValueToRoot($this->icon, 'icon', $value, $attributes);
+  }
+
+  public function getLogoValue() {
+    return $this->getValue($this->logo);
+  }
+
+  public function setLogoValue($value, $attributes) {
+    $this->setValueToRoot($this->logo, 'logo', $value, $attributes);
   }
   
   public function getUpdatedValue() {
